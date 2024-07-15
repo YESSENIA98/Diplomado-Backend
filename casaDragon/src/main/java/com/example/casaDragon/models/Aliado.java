@@ -1,5 +1,6 @@
 package com.example.casaDragon.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -12,13 +13,18 @@ public class Aliado {
     private Integer id;
 
     @Column(name = "nombres_aliado", nullable = true, length = 50)
-    private String nombres;
+    private String nombres; //validar letras y espacios y maximo 50 caracteres
 
     @Column(name= "ubicacion_aliado")
-    private String ubicacion;
+    private String ubicacion; //maximo 70 caracteres
 
     @Column(name = "aporte_aliado")
-    private Integer aporte;
+    private Integer aporte; //solo numeros positivos
+
+    @ManyToOne
+    @JoinColumn(name = "fk_jinete", referencedColumnName = "id")
+    @JsonBackReference
+    Jinete jinete;
 
     public Aliado() {
     }

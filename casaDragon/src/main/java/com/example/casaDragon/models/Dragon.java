@@ -1,6 +1,7 @@
 package com.example.casaDragon.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 //anotaciones
@@ -14,19 +15,21 @@ public class Dragon {
     //se pone falso si el campo es requerido sino, no pones nullable
     //length es el varchar
     @Column(name = "nombres_dragon", nullable = true, length = 50)
-    private String nombres;
+    private String nombres; //maximo 20 caracteres y solo letras y espacios
 
     @Column(name = "edad_dragon" )
-    private Integer edad;
+    private Integer edad; //solo numeros positivos y maximo 2000
 
     @Column(name = "altura_dragon")
-    private Double altura;
+    private Double altura; //solo numeros positivos
 
     @Column(name = "numero_victorias_dragon")
-    private Integer numeroVictorias;
+    private Integer numeroVictorias; //solo numeros positivos
 
     //relacion con el objeto completo
-    @OneToMany
+    @ManyToOne
+    @JoinColumn(name = "fk_jinete", referencedColumnName = "id")
+    @JsonBackReference
     Jinete jinete;
 
 
