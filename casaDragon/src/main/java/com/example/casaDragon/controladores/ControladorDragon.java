@@ -15,6 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("casadragonapi/v1/dragon")
 @Tag(name="Servicios Dragon", description = "Servicios asociados a la tabla Dragon de la bd dragrones, se hace CRUD completo")
@@ -61,9 +65,13 @@ public class ControladorDragon {
 
 
         }catch (Exception error){
+            Map<String, Object> mensajeError = new HashMap<>();
+            mensajeError.put("error", error.getMessage());
+            mensajeError.put("HoraError", LocalDateTime.now());
+
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body(error.getMessage());
+                    .body(mensajeError);
         }
     }
 

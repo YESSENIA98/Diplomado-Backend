@@ -14,6 +14,7 @@ public class Dragon {
     private Integer id;
     //se pone falso si el campo es requerido sino, no pones nullable
     //length es el varchar
+
     @Column(name = "nombres_dragon", nullable = true, length = 50)
     private String nombres; //maximo 20 caracteres y solo letras y espacios
 

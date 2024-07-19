@@ -2,6 +2,7 @@ package com.example.casaDragon.servicios;
 
 import com.example.casaDragon.DTO.DragonDTO;
 import com.example.casaDragon.helpers.MensajeServicios;
+import com.example.casaDragon.helpers.validaciones.DragonValidacion;
 import com.example.casaDragon.mapas.IMapaDragon;
 import com.example.casaDragon.models.Dragon;
 import com.example.casaDragon.repositories.DragonRepositorio;
@@ -21,13 +22,31 @@ public class DragonServicio {
     @Autowired
     IMapaDragon iMapaDragon;
 
+    @Autowired
+    DragonValidacion dragonValidacion;
+
     //agregarUnDragon
     public DragonDTO agregarDragon(Dragon datosDragon) throws Exception {
         //llamar a las validaciones
         try{
 
-            return iMapaDragon.mapearDragon(dragonRepositorio.save(datosDragon));
-            /*return dragonRepositorio.save(datosDragon);*/
+            if(!dragonValidacion.validarNombresDragon(datosDragon.getNombres())) {
+
+                throw new Exception("Nombre incorrecto");
+
+            } else if(!dragonValidacion.validarAltura(datosDragon.getAltura())){
+
+                    throw new Exception("Revisa la altura del dragon");
+
+            } else if(!dragonValidacion.validarVictorias(datosDragon.getNumeroVictorias())){
+
+                    throw new Exception("Revisa el numero de victorias");
+
+            } else {
+
+                return iMapaDragon.mapearDragon(dragonRepositorio.save(datosDragon));
+                /*return dragonRepositorio.save(datosDragon);*/
+            }
 
         }catch (Exception error) {
             throw new Exception(error.getMessage());
